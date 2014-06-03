@@ -10,9 +10,7 @@
 # Beginning Script Message
 clear
 echo && echo "Welcome to the Zenoss 4.2.5 core-autodeploy script for Ubuntu and Debian! (http://hydruid-blog.com/?p=710)" && echo
-echo "*WARNING*: This script will update your OS and for Debian users it will install the "Testing" version of some packages."
 echo "           Make sure to make a backup and/or take a snapshot!" && echo && sleep 5
-echo "...Begin, we will, learn you must." && sleep 1
 
 # Installer variables
 ZENOSSHOME="/home/zenoss"
@@ -25,11 +23,8 @@ DVER="03c"
 
 # Upgrade Message
 if [ $UPGRADE = "yes" ]; then
-        echo && echo "...The upgrade process from 4.2.4 to 4.2.5 is still a work in progress. Use at your own risk and MAKE A BACKUP!" && sleep 5
+	echo "Upgrading is not supported at this time." && exit 0
 fi
-
-# Update OS
-apt-get update && apt-get dist-upgrade -y && apt-get autoremove -y
 
 # Setup zenoss user and build environment
 useradd -m -U -s /bin/bash zenoss
@@ -42,10 +37,6 @@ mkdir $ZENHOME && chown -cR zenoss:zenoss $ZENHOME
 # OS compatibility tests
 detect-os && detect-arch && detect-user
 
-# Upgrade Preparation
-if [ $UPGRADE = "yes" ]; then
-        /etc/init.d/zenoss stop
-fi
 
 # Install Package Dependencies
 if [ $curos = "ubuntu" ]; then
